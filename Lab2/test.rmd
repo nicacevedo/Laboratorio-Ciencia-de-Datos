@@ -1,0 +1,87 @@
+---
+title: "Test"
+author: "nicacevedo"
+date: "4/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Test de Lab2 Python \leftarrow   R
+
+R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r import}
+dir <- './Dataset_lab2/'
+df_grades <- read.csv(paste(dir,'students_grades.csv', sep = ''))
+head(df_grades)
+```
+
+```{r analisis preliminar}
+analisis.preliminar.datos <- function(df_grades){
+  print('Extracto del DataFrame:')
+  print(head(df_grades))
+  
+  print('Dimensiones del DataFrame:')
+  print(dim(df_grades))
+  #print()
+  
+  print('Estadísticas Básicas:')
+  print(summary(df_grades))
+}
+  
+
+analisis.preliminar.datos(df_grades)
+```
+
+```{r distribuciones}
+
+library(ggplot2)
+
+distribuciones <- function(df_grades){
+  
+  # Recorro las columnas del dataframe
+  for (col in colnames(df_grades)){
+    column = df_grades[[col]]
+    
+    # Veo si son numéricas
+    if (class(column) == 'numeric'){
+      # Histograma
+      hist(
+        x = column, 
+        main = paste('Histogram of ', col),
+        breaks = seq(0,200,5)
+        )
+      
+      boxplot(
+        x = column, 
+        main = paste('Boxplot of ', col)
+        #breaks = seq(0,200,5)
+      )
+
+      }
+  }
+}
+
+distribuciones(df_grades)
+```
+
+```{r}
+
+#plot <- ggplot(data = df_grades, aes(df_grades$math.score, df_grades))
+#plot + geom_violin()
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
